@@ -1,24 +1,59 @@
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
+resource aws_key_pair ssh-key{
+    key_name = "my_ssh-key"
+    public_key = file("ssh-key.pub)
 }
 
-resource "aws_instance" "example" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+resource aws_default_vpc default{
 
-  tags = {
-    Name = "HelloWorld"
-  }
 }
+
+resource aws_security_group my_security_group{
+    name = "allow-all-on-instance"
+    description = "This will allow all traffic to my instance"
+    vpc_id = aws_default_vpc.default.id
+
+    ingress{
+      from_port = 0
+      to_port = 22
+      protocol = "tcp"
+      cidr_block = ["0.0.0.0/0"]
+      description = "This ssh incoming"
+    }
+
+    ingress{
+      from_port = 80
+      to_port = 80
+      protocol = "tcp"
+      cidr_block = ["0.0.0.0/0"]
+      description = "HTTP open"
+    }
+
+    egress{
+      from_port = 0
+      to_port = 0
+      protocol = -1
+      cidr_block = ["0.0.0.0/0"]
+      description = "Outgoing traffic"
+
+    }  
+
+    tags = {
+      name = "Allow all"
+    }
+}
+
+resource aws_instance my-instance{
+    key_name = aws_key_pair.ssh-key.key_name
+    security_group = [aws_security_group.my_security_group.name]
+    instance_type = "t2.micro"
+    ami = "ami-98sd9fy9dfs23"
+    
+    root_block_volume{
+      volume_size = 10
+      volume_type = "gp3"
+    }
+    tags = {
+      Name = "My-ec2-instance"
+    }
+}
+
