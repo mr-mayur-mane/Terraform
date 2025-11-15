@@ -45,11 +45,11 @@ resource aws_security_group my_security_group{
 resource aws_instance my-instance{
     key_name = aws_key_pair.ssh-key.key_name
     security_group = [aws_security_group.my_security_group.name]
-    instance_type = "t2.micro"
-    ami = "ami-98sd9fy9dfs23"
+    instance_type = var.aws_instance_type
+    ami = var.ec2_ami_id
     
     root_block_volume{
-      volume_size = 10
+      volume_size = var.aws_root_storage_size
       volume_type = "gp3"
     }
     tags = {
