@@ -42,7 +42,7 @@ resource aws_security_group my_security_group{
     }
 }
 
-resource aws_instance my-instance{
+resource aws_instance my_instance{
     key_name = aws_key_pair.ssh-key.key_name
     security_group = [aws_security_group.my_security_group.name]
     instance_type = var.aws_instance_type
