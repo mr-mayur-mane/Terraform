@@ -43,10 +43,13 @@ resource aws_security_group my_security_group{
 }
 
 resource aws_instance my_instance{
-    count          = 2
+    for_each = tomap({
+      my_instance_1_micro  = "t2.micro",
+      my_instance_2_medium = "t2.medium"
+    })  #meta argument
     key_name       = aws_key_pair.ssh-key.key_name
     security_group = [aws_security_group.my_security_group.name]
-    instance_type  = var.aws_instance_type
+    instance_type  = each.value
     ami            = var.ec2_ami_id
     user_data      = file("install_nginx.sh") 
     
