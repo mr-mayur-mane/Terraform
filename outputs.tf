@@ -1,7 +1,13 @@
 output "ec2_public_ip"{
-    vaule = aws_instance.my_instance[*].public_ip
+    #value = aws_instance.my_instance[*].public_ip
+    value = [
+        for instance in aws_instance.my_instance : key.public_ip
+    ]
 }
 
 output "ec2_public_dns"{
-    vaule = aws_instance.my_instance[*].public_dns
+    #value = aws_instance.my_instance[*].public_dns
+    value = [
+        for instance in aws_instance.my_instance : key.public_dns
+    ]
 }
