@@ -48,7 +48,7 @@ resource aws_instance my_instance{
     })  #meta argument
 
     depends_on = [aws_security_group.my_security_group, aws_key_pair.ssh-key]
-    
+
     key_name       = aws_key_pair.ssh-key.key_name
     security_group = [aws_security_group.my_security_group.name]
     instance_type  = each.value
@@ -56,7 +56,7 @@ resource aws_instance my_instance{
     user_data      = file("install_nginx.sh") 
     
     root_block_volume{
-      volume_size = var.aws_root_storage_size
+      volume_size = var.env == "prod" ? 20 : var.aws_root_storage_size
       volume_type = "gp3"
     }
     tags = {
