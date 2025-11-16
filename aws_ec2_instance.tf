@@ -46,6 +46,9 @@ resource aws_instance my_instance{
       my_instance_1_micro  = "t2.micro",
       my_instance_2_medium = "t2.medium"
     })  #meta argument
+
+    depends_on = [aws_security_group.my_security_group, aws_key_pair.ssh-key]
+    
     key_name       = aws_key_pair.ssh-key.key_name
     security_group = [aws_security_group.my_security_group.name]
     instance_type  = each.value
