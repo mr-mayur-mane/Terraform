@@ -1,66 +1,49 @@
-resource aws_key_pair ssh-key{
-    key_name   = "my_ssh-key"
-    public_key = file("ssh-key.pub)
+resource aws_key_pair ssh_key{
+    key_name   = my_ssh_key
+    public_key = file("ssh-key.pub")
 }
 
 resource aws_default_vpc default{
 
 }
-
-resource aws_security_group my_security_group{
-    name        = "allow-all-on-instance"
-    description = "This will allow all traffic to my instance"
+resource aws_security_group allow_all{
+    name        = "allow all"
+    description = 'Allow all traffic'
     vpc_id      = aws_default_vpc.default.id
+  
+  ingress{
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+     
+  }
+  egress{
+    from_port = 0
+    to_port   = 0
+    protocol  = -1
+  }
 
-    ingress{
-      from_port   = 0
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_block  = ["0.0.0.0/0"]
-      description = "This ssh incoming"
-    }
+  tags = {
+    Name = Allow all traffic
+  }
 
-    ingress{
-      from_port    = 80
-      to_port      = 80
-      protocol     = "tcp"
-      cidr_block   = ["0.0.0.0/0"]
-      description  = "HTTP open"
-    }
-
-    egress{
-      from_port   = 0
-      to_port     = 0
-      protocol    = -1
-      cidr_block  = ["0.0.0.0/0"]
-      description = "Outgoing traffic" 
-
-      tags = {
-        name = "Allow all"
-      }
-    }
 }
 
 resource aws_instance my_instance{
-    for_each = tomap({
-      my_instance_1_micro  = "t2.micro",
-      my_instance_2_medium = "t2.medium"
-    })  #meta argument
+  for_each = tomap({
+    my_instance_1   = "t2.micro",
+    my_instance_2   = "t2.medium"
+  })
+  key_name          = aws_key_pair.ssh_key.key_name
+  depends_on        = [aws_security_group.allow_all, aws_key_pair.ssh_key]
+  security_group    = aws_security_group.allow_all.name
+  ami               = var.ec2_ami_id
+  user_data         = file("install_nginx.sh")
+  instance_type     = each.value
 
-    depends_on = [aws_security_group.my_security_group, aws_key_pair.ssh-key]
-
-    key_name       = aws_key_pair.ssh-key.key_name
-    security_group = [aws_security_group.my_security_group.name]
-    instance_type  = each.value
-    ami            = var.ec2_ami_id
-    user_data      = file("install_nginx.sh") 
-    
-    root_block_volume{
-      volume_size = var.env == "prod" ? 20 : var.aws_root_storage_size
-      volume_type = "gp3"
-    }
-    tags = {
-      Name = "My-ec2-instance"
-    }
+  root_block_volume{
+    volume_size = 10
+    volume_type = "gp3
+  }
 }
 
