@@ -9,6 +9,6 @@ resource "aws_dynamodb_table" "terraform_table" {
   }
 
   tags = {
-    Name        = "terraform-state-table"
+    Name   = "terraform-state-table"
   }
 }
