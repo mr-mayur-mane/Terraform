@@ -42,7 +42,11 @@ resource aws_instance my_instance{
   instance_type     = each.value
 
   root_block_volume{
-    volume_size = 10
+    foreach = tomap({
+      my_instance_1 = "10"
+      my_instance_2 = "20"
+    })
+    volume_size = each.value
     volume_type = "gp3
   }
 }
