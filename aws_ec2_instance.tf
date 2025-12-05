@@ -46,6 +46,7 @@ resource aws_instance my_instance{
       my_instance_1 = "10",
       my_instance_2 = "20"
     })
+    
     volume_size = each.value
     volume_type = "gp3
   }
