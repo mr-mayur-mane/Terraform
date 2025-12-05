@@ -10,6 +10,7 @@ resource aws_s3_bucket terraform_state{
             my_bucket_prod = "Production terraform State bucket",
             my_bucket_dev = "Development terraform state bucket"
         })
+        
         Name = each.value
         Environment = "Prod"
     }
