@@ -30,14 +30,22 @@ resource aws_security_group my_security_group{
 }
 
 resource aws_instance my_instance{
+  for_each = tomap{
+    my_instance_1 = "t2.micro",
+    my_instance_2 = "t3.medium"
+  }
   key_name        = aws_key_pair.my_key.key_name
   security_group  = aws_security_group.my_security_group
   depends_on      = [aws_security_group.my_security_group, aws_key_pair.my_key.my_ssh_key]
   ami             = var.ec2_ami_id
-  instance_type   = "t2.micro"
+  instance_type   = each.value
 
   root_block_storage{
-    volume_size = "10"
+    for_each = tomap{
+      my_instance_1 = "10",
+      my_instance_2 = "20"
+    }
+    volume_size = each.value
     volume_type = "gp3"   
   }
 
