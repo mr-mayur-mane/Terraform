@@ -27,6 +27,20 @@ resource aws_security_group my_security_group{
       Name = Allow all traffic
     }
 
-
 }
 
+resource aws_instance my_instance{
+  key_name        = aws_key_pair.my_key.key_name
+  security_group  = aws_security_group.my_security_group
+  depends_on      = [aws_security_group.my_security_group, aws_key_pair.my_key.my_ssh_key]
+  ami             = var.ec2_ami_id
+  instance_type   = "t2.micro"
+
+  root_block_storage{
+    volume_size = "10"
+    volume_type = "gp3"   
+  }
+
+
+
+}
