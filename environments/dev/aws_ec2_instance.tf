@@ -48,7 +48,9 @@ resource aws_instance my_instance{
     volume_size = each.value
     volume_type = "gp3"   
   }
-
-
+  tags ={
+    Name = Dev instances
+    Description = This is dev ec2 instances
+  }
 
 }
