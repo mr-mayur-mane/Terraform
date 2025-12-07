@@ -32,7 +32,7 @@ resource aws_security_group my_security_group{
 resource aws_instance my_instance{
   for_each = tomap{
     my_instance_1 = "t2.micro",
-    my_instance_2 = "t3.medium"
+    my_instance_2 = "t2.medium"
   }
   key_name        = aws_key_pair.my_key.key_name
   security_group  = aws_security_group.my_security_group
