@@ -1,13 +1,13 @@
-resource aws_key_pair my_key{
+resource "aws_key_pair" "my_key"{
   key_name   = my_ssh_key
   public_key = file("pub_key")
 }
 
-resource aws_default_vpc default{
+resource "aws_default_vpc" "default"{
 
 }
 
-resource aws_security_group my_security_group{
+resource "aws_security_group" "my_security_group"{
     name        = "allow all"
     description = "Allow all incoming and outgoing network traffic"
 
@@ -29,7 +29,7 @@ resource aws_security_group my_security_group{
 
 }
 
-resource aws_instance my_instance{
+resource "aws_instance" "my_instance"{
   for_each = tomap{
     my_instance_1 = "t2.micro",
     my_instance_2 = "t2.medium"
