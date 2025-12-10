@@ -17,6 +17,7 @@ resource "aws_vpc" "example" {
   cidr_block = "10.0.0.0/16"
 }
 
+#add the backend
 backend "s3" {
     bucket         = "Terraform State bucket"
     key            = "terraform.tfstate"
