@@ -20,6 +20,7 @@ resource "aws_vpc" "example" {
 }
 
 #add the backend
+
 backend "s3" {
     bucket         = "Terraform State bucket"
     key            = "terraform.tfstate"
