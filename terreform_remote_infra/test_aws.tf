@@ -43,7 +43,11 @@ resource "aws_instance" "my_instance"{
     instance_type            = each.value
 
     root_block_device{
+        for_each = tomap({
+            instance1 = "gp2",
+            instance2 = "gp3"
+        })
         volume_size = 10
-        volume_type = "gp3"
+        volume_type = each.name
     }
 }
