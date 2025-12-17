@@ -38,7 +38,7 @@ resource "aws_instance" "my_instance"{
     })
     key_name =  aws_key_pair.ssh_key_pair.key_name
     vpc_security_group_ids   = [aws_security_group.my_security_group.id] 
-    depends_on               = [aws_security_group.my_security_group.id]
+    depends_on               = [aws_security_group.my_security_group]
     ami                      = var.ec2_ami_id
     instance_type            = each.value
 
@@ -48,6 +48,6 @@ resource "aws_instance" "my_instance"{
             instance2 = "gp3"
         })
         volume_size = 10
-        volume_type = each.name
+        volume_type = each.value
     }
 }
