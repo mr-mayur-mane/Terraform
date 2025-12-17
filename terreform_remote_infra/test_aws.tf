@@ -31,14 +31,19 @@ resource "aws_security_group" "my_security_group"{
 }
 
 resource "aws_instance" "my_instance"{
+    for_each = tomap({
+        instance1 = "t2.micro",
+        instance2 = "t2.medium"
+
+    })
     key_name =  aws_key_pair.ssh_key_pair.key_name
-    vpc_security_group_ids   = [aws_security_group.my_security_group.vpc_id] 
-    depends_on               = [aws_security_group.my_security_group.vpc_id]
+    vpc_security_group_ids   = [aws_security_group.my_security_group.id] 
+    depends_on               = [aws_security_group.my_security_group.id]
     ami                      = var.ec2_ami_id
-    instance_type            = "t2.medium"
+    instance_type            = each.value
 
     root_block_device{
         volume_size = 10
-        volume_type = gp3
+        volume_type = "gp3"
     }
 }
