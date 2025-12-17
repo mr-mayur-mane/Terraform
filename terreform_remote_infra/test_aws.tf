@@ -29,3 +29,10 @@ resource "aws_security_group" "my_security_group"{
         Description = "Allow all traffic to pass"
     }
 }
+
+resource "aws_instance" "my_instance"{
+    key_name =  aws_key_pair.ssh_key_pair.key_name
+    vpc_security_group_ids   = ["aws_security_group.my_security_group.vpc_id"] 
+    ami                      = var.ec2_ami_id
+    instance_type            = "t2.medium"
+}
