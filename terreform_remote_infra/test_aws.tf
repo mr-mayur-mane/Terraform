@@ -1,4 +1,4 @@
-resource "aws_key_pair" "my_shh_key"{
+resource "aws_key_pair" "my_ssh_key"{
     key_name    = "my ssh key"
     public_key  = file("my_ssh_Key.pub")
 
