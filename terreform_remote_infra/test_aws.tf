@@ -31,9 +31,9 @@ resource "aws_security_group" "my_security_group"{
     }
 }
 
-resource "aws_intance" "my_intance"{
+resource "aws_instance" "my_instance"{
     key_name                = aws_key_pair.my_ssh_key.key_name
-    vpc_secuirty_group_ids  = ["aws_security_group.my_security_group.id"]
+    vpc_security_group_ids  = ["aws_security_group.my_security_group.id"]
     ami                     = var.ec2_ami_id
     instance_type           = "t2.medium"
 
