@@ -1,6 +1,6 @@
 resource "aws_key_pair" "my_ssh_key"{
     key_name    = "my_ssh_key"
-    public_key  = file("my_ssh_Key.pub")
+    public_key  = file("my_ssh_key.pub")
 
 }
 
