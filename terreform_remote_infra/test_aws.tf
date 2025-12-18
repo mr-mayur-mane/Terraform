@@ -12,7 +12,7 @@ resource "aws_security_group" "my_security_group"{
     name    = "Alloe all"
     vpc_id  = aws_default_vpc.default.id
     
-    igress{
+    ingress{
         from_port   = "0"
         to_port     = "0"
         protocol    = -1
