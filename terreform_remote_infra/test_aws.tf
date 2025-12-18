@@ -1,5 +1,5 @@
 resource "aws_key_pair" "my_ssh_key"{
-    key_name    = "my ssh key"
+    key_name    = "my_ssh_key"
     public_key  = file("my_ssh_Key.pub")
 
 }
@@ -15,14 +15,14 @@ resource "aws_security_group" "my_security_group"{
     ingress{
         from_port   = "0"
         to_port     = "0"
-        protocol    = -1
+        protocol    = "-1"
         cidr_blocks = ["0.0.0.0/0"]
     }
 
     egress{
         from_port   = "0"
         to_port     = "0"
-        protocol    = -1
+        protocol    = "-1"
         cidr_blocks = ["0.0.0.0/0]
     }
     tags={
