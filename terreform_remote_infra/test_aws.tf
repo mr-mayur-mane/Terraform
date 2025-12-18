@@ -36,5 +36,10 @@ resource "aws_intance" "my_intance"{
     vpc_secuirty_group_ids  = ["aws_security_group.my_security_group.id"]
     ami                     = var.ec2_ami_id
     instance_type           = "t2.medium"
+
+    root_block_device{
+        volume_size = 10
+        volume_type = "gp3"
+    }
 }
 
