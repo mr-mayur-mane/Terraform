@@ -35,12 +35,12 @@ resource "aws_instance" "my_instance"{
     my_instance_2 = "t2.medium"
   }
   key_name        = aws_key_pair.my_key.key_name
-  security_group  = aws_security_group.my_security_group
+  vpc_security_group_ids  = [aws_security_group.my_security_group.id]
   depends_on      = [aws_security_group.my_security_group, aws_key_pair.my_key.my_ssh_key]
   ami             = var.ec2_ami_id
   instance_type   = each.value
 
-  root_block_storage{
+  root_block_devive{
     for_each = tomap{
       my_instance_1 = "10",
       my_instance_2 = "20"
