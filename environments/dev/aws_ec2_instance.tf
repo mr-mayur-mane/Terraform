@@ -44,8 +44,8 @@ resource "aws_instance" "my_instance"{
 
   root_block_devive{
     for_each = tomap({
-      my_instance_1 = "10",
-      my_instance_2 = "20"
+      my_instance_1 = 10,
+      my_instance_2 = 20
     })
     
     volume_size = each.value
