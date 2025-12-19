@@ -1,5 +1,5 @@
 resource "aws_key_pair" "my_key"{
-  key_name   = my_ssh_key
+  key_name   = "my_ssh_key"
   public_key = file("pub_key")
 }
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "my_security_group"{
     }
 
     tags={
-      Name = Allow all traffic
+      Name = "Allow all traffic"
     }
 
 }
