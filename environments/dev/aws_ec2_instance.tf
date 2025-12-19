@@ -3,7 +3,7 @@ resource "aws_key_pair" "my_key"{
   public_key = file("pub_key")
 }
 
-resource aws_default_vpc default{
+resource "aws_default_vpc" "default"{
 
 }
 
@@ -32,10 +32,10 @@ resource "aws_security_group" "my_security_group"{
 }
 
 resource "aws_instance" "my_instance"{
-  for_each = tomap{
+  for_each = tomap({
     my_instance_1 = "t2.micro",
     my_instance_2 = "t2.medium"
-  }
+  })
   key_name        = aws_key_pair.my_key.key_name
   vpc_security_group_ids  = [aws_security_group.my_security_group.id]
   depends_on      = [aws_security_group.my_security_group, aws_key_pair.my_key.my_ssh_key]
@@ -43,10 +43,10 @@ resource "aws_instance" "my_instance"{
   instance_type   = each.value
 
   root_block_devive{
-    for_each = tomap{
+    for_each = tomap({
       my_instance_1 = "10",
       my_instance_2 = "20"
-    }
+    })
     
     volume_size = each.value
     volume_type = "gp3"   
