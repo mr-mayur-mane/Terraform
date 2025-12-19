@@ -25,7 +25,7 @@ resource "aws_security_group" "my_security_group"{
       cidr_blocks = ["0.0.0.0/0"]
     }
 
-    tags{
+    tags={
       Name = Allow all traffic
     }
 
