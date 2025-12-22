@@ -30,3 +30,16 @@ resource "aws_security_group" "my_security_group"{
         Description = "Allow allow traffic"
     }
 }
+
+resource "aws_instance" "my_instance"{
+    key_name = aws_key_pair.my_ssh.key_name
+    vpc_security_group_ids = [aws_security_group.my_security_group]
+    instance_key  = "t2.micro"
+    ami = var.ec2_ami_id
+
+
+    root_block_device{
+        volume_size = 10
+        volume_type = "gp3"
+    }
+}
