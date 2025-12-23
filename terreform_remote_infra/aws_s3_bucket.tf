@@ -1,4 +1,4 @@
-resource aws_s3_bucket terraform_state{
+resource "aws_s3_bucket" "terraform_state"{
     for_each = tomap({
         my_bucket_prod = "Terraform State bucket Prod",
         my_bucket_dev = "Terraform State bucket Dev"
