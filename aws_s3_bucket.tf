@@ -4,6 +4,7 @@ resource "aws_s3_bucket" "mybucket"{
 
     tags ={
         Name = "My bucket"
+        Description = "This is development bucket"
         Environment = "Dev"
     }
 
