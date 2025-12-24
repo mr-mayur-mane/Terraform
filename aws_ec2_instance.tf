@@ -27,6 +27,7 @@ resource "aws_security_group" "security_group"{
   }
   tags={
     Name  = "Allow all"
+    Description = "Allow all traffic to flow in/out"
   }
 }
 
