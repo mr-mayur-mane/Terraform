@@ -1,6 +1,6 @@
 resource "aws_key_pair" "ssh_key"{
   key_name   = "my_ssh_key"
-  public_key = file("pub_key")
+  public_key = file("./files/pub_key")
 }
 
 resource "aws_default_vpc" "default_vpc"{
