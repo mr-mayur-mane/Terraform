@@ -33,7 +33,7 @@ resource "aws_security_group" "security_group"{
 
 resource "aws_instance" "my_instance"{
   for_each = tomap({
-    intance_1 = "t2.micro,
+    intance_1 = "t2.micro",
     intance_2 = "t3.micro"
   })
   key_name       = aws_key_pair.ssh_key.key_name
