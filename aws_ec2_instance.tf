@@ -32,6 +32,7 @@ resource "aws_security_group" "security_group"{
 }
 
 resource "aws_instance" "my_instance"{
+  count = 2
   key_name       = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids = [aws_security_group.security_group]
   ami            =  var.ec2_ami_id
