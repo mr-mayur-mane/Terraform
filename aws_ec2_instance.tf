@@ -32,11 +32,14 @@ resource "aws_security_group" "security_group"{
 }
 
 resource "aws_instance" "my_instance"{
-  count = 2
+  for_each = tomap({
+    intance_1 = "t2.micro,
+    intance_2 = "t3.micro"
+  })
   key_name       = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids = [aws_security_group.security_group]
   ami            =  var.ec2_ami_id
-  instance_type  = "t2.micro"
+  instance_type  = "each.value"
 
   root_block_device{
     volume_size  = 10
