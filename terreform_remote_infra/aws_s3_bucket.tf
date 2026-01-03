@@ -1,17 +1,20 @@
 resource "aws_s3_bucket" "terraform_state"{
-    for_each = tomap({
-        my_bucket_prod = "Terraform State bucket Prod",
-        my_bucket_dev = "Terraform State bucket Dev"
-    })
-    bucket = each.value
+    for_each = {
+        prod={
+            bucket_name = "Terraform dev bucket"
+            environment = "dev"
+        }
 
-    tags = {
-        for_each = tomap({
-            my_bucket_prod = "Production terraform State bucket",
-            my_bucket_dev = "Development terraform state bucket"
-        })
-        
-        Name = each.value
-        Environment = "Prod"
+        dev = {
+            bucket_name = "Terraform prod bucket"
+            environment = "prod"
+        }
+    }
+
+    bucket = each.value.bucket_name
+
+    tags={
+        Name = each.value.bucket_name
+        Environment = each.value.environment
     }
 }
