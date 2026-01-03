@@ -13,3 +13,9 @@ resource "aws_dynamodb_table" "terraform_table" {
     Name   = "terraform-state-table"
   }
 }
+
+resource "aws_dynamodb_table" "terraform_state_table_"{
+    name         = "terraform_state_table"
+    billing_mode = "PAY_PER_REQUEST"
+    hash_key     =  "lock_id" 
+}
