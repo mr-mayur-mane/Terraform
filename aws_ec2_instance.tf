@@ -36,7 +36,6 @@ resource "aws_instance" "my_instance"{
     instance_1 = "t2.small",
     instance_2 = "t2.medium"
   })
-  count = 2
   key_name       = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids = [aws_security_group.security_group]
   ami            =  var.ec2_ami_id
