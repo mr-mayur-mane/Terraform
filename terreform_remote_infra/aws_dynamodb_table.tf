@@ -10,6 +10,7 @@ resource "aws_dynamodb_table" "terraform_state_table_"{
 
     tags={
       Name = "Terraform state table"
+      
       Description = "Terreform state table to access the state file once per request"
     }
 }
