@@ -1,4 +1,4 @@
-resource "aws_dynamodb_table" "terraform_state_table_"{
+resource "aws_dynamodb_table" "terraform_state_table"{
     name         = "terraform_state_table"
     billing_mode = "PAY_PER_REQUEST"
     hash_key     =  "lock_id" 
@@ -10,7 +10,7 @@ resource "aws_dynamodb_table" "terraform_state_table_"{
 
     tags={
       Name = "Terraform state table"
-      
+
       Description = "Terreform state table to access the state file once per request"
     }
 }
