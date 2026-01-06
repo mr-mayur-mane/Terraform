@@ -1,14 +1,12 @@
 resource "aws_s3_bucket" "terraform_state"{
-    for_each = {
+    for_each = map{
         prod={
             bucket_name = "Terraform dev bucket"
-
             environment = "dev"
         }
 
         dev = {
-            bucket_name = "Terraform prod bucket"
-            
+            bucket_name = "Terraform prod bucket"           
             environment = "prod"
         }
     }
