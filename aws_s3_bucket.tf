@@ -1,11 +1,19 @@
 resource "aws_s3_bucket" "my_bucket"{
     for_each= tomap({
-        prod = 
+        prod = {
+            bucket_name = "Terraform Prod"
+            environment = "prod" 
+        }
+
+        dev= {
+            bucket_name = "Terraform Dev"
+            environment = "dev"
+        }
     })
-    bucket = "My S3 Bucket"
+    bucket = each.value.bucket_name
     tags={
         Name = "Development Bucket"
         Description = "Development Bucket"
-        Environment = "DEV"
+        Environment = each.value.environment
     }
 }
