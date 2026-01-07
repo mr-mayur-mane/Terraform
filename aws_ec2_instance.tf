@@ -33,18 +33,26 @@ resource "aws_security_group" "security_group"{
 }
 
 resource "aws_instance" "my_instance"{
-  for_each = tomap({
-    instance_1 = "t2.small",
-    instance_2 = "t2.medium"
-  })
+  for_each = {
+    instance_1 = {
+      instance_type = "t2.micro"
+      volume_size   = 10
+      volume_type   = "gp2"
+    } 
+    instance_2  = {
+      instance_type = "t2.medium"
+      volume_size   = 20
+      volume_type   = "gp3"
+    }
+  }
   key_name       = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids = [aws_security_group.security_group]
   ami            =  var.ec2_ami_id
-  instance_type  = each.value
+  instance_type  = each.value.instance_type
 
   root_block_device{
-    volume_size  = 10
-    volume_type  = "gp3"
+    volume_size  = each.value.volume_size
+    volume_type  = each.value.volume_type
   }
 
 }
