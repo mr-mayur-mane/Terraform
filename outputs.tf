@@ -20,6 +20,10 @@ output "ec2_public_ip"{
     ]
 }
 
+output "instance_type"{
+    for instance in aws_instance.my_instance : instance.instance_type
+}
+
 output "instance_volume"{
     value = [
         for instance in aws_instance.my_instance : instance.volume
