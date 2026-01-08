@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "my_bucket"{
     bucket = each.value.bucket_name
     tags={
         Name = each.value.bucket_name
-        Description = "Development Bucket"
+        Description = each.value.bucket_name
         Environment = each.value.environment
     }
 }
