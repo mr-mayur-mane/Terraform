@@ -21,7 +21,13 @@ output "ec2_public_ip"{
 }
 
 output "instance_type"{
+    value = [
     for instance in aws_instance.my_instance : instance.instance_type
+    ]
+}
+
+output "volume_type"{
+    value = aws_instance.my_instance[*].voluem_type
 }
 
 output "instance_volume"{
