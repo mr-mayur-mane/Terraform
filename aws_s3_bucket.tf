@@ -21,3 +21,4 @@ resource "aws_s3_bucket" "my_bucket"{
 
 # terraform init
 #terraform plan
+#terraform apply
