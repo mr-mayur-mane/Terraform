@@ -19,3 +19,8 @@ resource "aws_s3_bucket" "terraform_state"{
         Environment = each.value.environment
     }
 }
+
+resource "aws_s3_bucket" "my-bucket"{
+    bucket= "my-test-bucket"
+
+}
