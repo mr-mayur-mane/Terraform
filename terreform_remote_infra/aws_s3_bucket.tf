@@ -21,11 +21,22 @@
 # }
 
 resource "aws_s3_bucket" "my-bucket"{
-    bucket= "my-test-bucket"
+    for_each={
+        bucket_1={
+            bucket_name = "my-bucket-1"
+            environment = "dev"
+        }
+        bucket_2={
+            bucket_name = "my-bucket-2"
+            environment = "prod"
+        }
+    }
+    bucket= each.value.bucket_name
 
     tags={
         Name = "test"
         Description = "this is the test bucket"
+        Environment = each.value.environment
     }
 
 }
