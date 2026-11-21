@@ -14,12 +14,6 @@ output "ec2_public_dns"{
     ]
 }
 
-output "ec2_public_ip"{
-    value = [
-        for instance in aws_instance.my_instance : instance.private_ip
-    ]
-}
-
 output "instance_type"{
     value = [
     for instance in aws_instance.my_instance : instance.instance_type
