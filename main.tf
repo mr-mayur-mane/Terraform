@@ -1,16 +1,7 @@
-# Configure the AWS Provider
-provider "aws" {
-  region = "us-east-1"
+resource "local_file" "my-file" {
+  filename = "autommate.txt"
+  content  = "This is the dummy content"
 }
-
-# Create a VPC
-
-resource "aws_vpc" "example" {
-  
-  cidr_block = "10.0.0.0/16"
-}
-
-#add the backend
 
 
 
