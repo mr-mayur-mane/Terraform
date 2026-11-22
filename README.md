@@ -23,7 +23,7 @@ services:
 
 Access the floci at
 ```bash
-http:localhost:4566
+http://localhost:4566
 ```
 
 ## Local Environment Setup
