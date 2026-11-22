@@ -1,6 +1,6 @@
 resource "aws_key_pair" "ssh_key_pair" {
   key_name   = "terraform-key-ec2"
-  public_key = file("terraform-key-ec2.pem")
+  public_key = file("terraform-key-ec2.pub")
 }
 
 resource "aws_default_vpc" "default" {
@@ -41,17 +41,21 @@ resource "aws_security_group" "my_security_group" {
 }
 
 resource "aws_instance" "ec2_instance" {
+  for_each = tomap({
+    support-server-001 = "t2.micro",
+    support-server-002 = "t2.small"
+  })
   key_name        = aws_key_pair.ssh_key_pair.key_name
   security_groups = ["default"]
-  instance_type   = "t2.micro"
+  instance_type   = each.value
   ami             = var.ec2_instance_ami_id
-  user_data = file("install_nginx.sh")
+  user_data       = file("install_nginx.sh")
   root_block_device {
-    volume_size = 20
+    volume_size = var.env == "prod" ? 20 : var.ec2_instance_default_root_volume
     volume_type = "gp3"
   }
   tags = {
-    Name        = "support-server-001"
-    Description = "This is the support-server-001"
+    Name        = each.key
+    Description = "This is the each.key"
   }
 }
