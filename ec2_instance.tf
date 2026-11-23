@@ -51,7 +51,7 @@ resource "aws_instance" "ec2_instance" {
   ami             = var.ec2_instance_ami_id
   user_data       = file("install_nginx.sh")
   root_block_device {
-    volume_size = var.env == "prod" ? 20 : var.ec2_instance_default_root_volume
+    volume_size = each.value == "t2.small" ? 20 : var.ec2_instance_default_root_volume
     volume_type = "gp3"
   }
   tags = {
